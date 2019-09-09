@@ -1,0 +1,19 @@
+---
+# tasks file for roles/lb
+- name: install HAProxy
+  yum:
+   name: haproxy
+   state: latest
+
+- name: enable HAProxy
+  service:
+   name: haproxy
+   enabled: yes
+   state: started
+
+- name: configure haproxy
+  template:
+   src: haproxy.cfg.j2
+   dest: /etc/haproxy/haproxy.cfg
+  notify:
+   - restart_haproxy
